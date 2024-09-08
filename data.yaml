@@ -1,0 +1,13 @@
+train: /Users/kaytee/Documents/BroCodes/VandalismDetection/train/images
+val: /Users/kaytee/Documents/BroCodes/VandalismDetection/valid/images
+test: /Users/kaytee/Documents/BroCodes/VandalismDetection/test/images
+
+nc: 1
+names: ['graffiti']
+
+roboflow:
+  workspace: yolo-icunv
+  project: graffiti-detector
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/yolo-icunv/graffiti-detector/dataset/1
