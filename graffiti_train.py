@@ -1,24 +1,21 @@
 from ultralytics import YOLO
+import torch
+
+# Check if MPS (Apple Silicon GPU) is available and set the device
+device = 'mps' if torch.backends.mps.is_available() else 'cpu'
 
 # Load the YOLOv8 model
-model = YOLO('yolov8n.pt')  # 'n' stands for the nano model; you can choose 's', 'm', 'l', or 'x' for larger models
+model = YOLO('yolov8m.pt')
 
-# Train the model
-# model.train(
-#     data='/Users/kaytee/Documents/BroCodes/VandalismDetection/data.yaml',  # Path to your data.yaml file
-#     epochs=100,
-#     imgsz=640,
-#     batch=16,
-#     name='graffiti_detector'
-# )
+# Train the model using the MPS (GPU)
+model.train(
+    data='/Users/kaytee/Documents/BroCodes/VandalismDetection/Combined Dataset -Spitting - Graffiti-/data.yaml',  # Path to your data.yaml file
+    epochs=10,
+    imgsz=640,
+    batch=16,
+    name='detect',
+    device=device  # Use the MPS device
+)
 
-# Evaluate the model on the validation set
-metrics = model.val()
-print("Validation metrics:", metrics)
-
-# Optional: Test the model on the test set using predict
-results = model.predict(source='/Users/kaytee/Documents/BroCodes/VandalismDetection/test/images', conf=0.5)
-print("Prediction results:", results)
-
-# Save the model weights
-model.export(format='onnx')  # You can choose 'torchscript', 'tflite', 'coreml' if needed
+# Optional: Export the trained model to ONNX format
+model.export(format='onnx')
